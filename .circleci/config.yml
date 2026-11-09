@@ -1,0 +1,1336 @@
+version: 2.1
+
+jobs:
+  LEN9:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Compute digest v3
+          command: |
+            mkdir -p /tmp/tmp2
+            set +o pipefail 2>/dev/null; { echo "id,hash"; seq 1 1472304 | awk '{print $1","sprintf("%08x",$1*31)}' ; } > /tmp/tmp2/014747_2016; true
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - '014747_2016'
+  anothr-run:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/014747_2016 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  sgdSGDGlyph:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Late tagging
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 1 -type f 2>/dev/null|grep '.d'|head -n12; true ; } > /tmp/tmp2/TXN-2022-50564
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'TXN-2022-50564'
+  DEV_STAGE_3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/TXN-2022-50564 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  raw_time:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: The firewall rules can be opened later
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; find /usr/lib -maxdepth 2 -iname '*.so*' -size 0 -mtime 0 -exec basename {} ';' 2>/dev/null|sort|head -n 3; true ; } > /tmp/tmp2/surge_90218
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'surge_90218'
+  rip-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/014747_2016 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  seedkhz:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: NTP sync allowed and verified
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; split -l 9 /etc/passwd ${TMPDIR:-/tmp}/sod1- && ls ${TMPDIR:-/tmp}/sod1-*; true ; } > /tmp/tmp2/debug-ca0b.log
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'debug-ca0b.log'
+  ivan-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/debug-ca0b.log 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  Request-ChannelId:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Scroll until the submit button shows
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; grep -r --include='*rc' export /etc/skel 2>/dev/null | cut -d: -f1 | sort -u; true ; } > /tmp/tmp2/c92_9394.Backup
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'c92_9394.Backup'
+  STG_DEPLOY_4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/014747_2016 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  CommonSemaphoreBase:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: To free memory quarantine the secrets
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; echo -n "works for me" | wc -m; true ; } > /tmp/tmp2/51gm4-1azy-c4ch3-hawk
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - '51gm4-1azy-c4ch3-hawk'
+  cd-old:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/51gm4-1azy-c4ch3-hawk 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  table-2021-w04:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Index the style guide with logging
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; getent group | sort -n -t : -k 3 | cut -d':' -f3; true ; } > /tmp/tmp2/seed_988
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'seed_988'
+  ShipTests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/seed_988 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  undo-migration_color:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Style guide outline run
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; sha256sum <(echo "spam and eggs"); true ; } > /tmp/tmp2/d6oWyb
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'd6oWyb'
+  DEV_CHECK_6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/d6oWyb 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  d2uv7j:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Shrink wrap gets dispatched twice
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; echo "we're live" >| "/tmp/issues.list" && cat "/tmp/issues.list"; true ; } > /tmp/tmp2/hNN3STo7xl8Tk5
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'hNN3STo7xl8Tk5'
+  node18-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/hNN3STo7xl8Tk5 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  omni-table:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: third time lucky alert
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'tests passed' | od -c | head -2; true ; } > /tmp/tmp2/debug-184e.log
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'debug-184e.log'
+  py311-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/debug-184e.log 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  writer-grid-text-robot:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Stream skybox at 1440p
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; shuf -e lion cat whale; true ; } > /tmp/tmp2/beam82
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'beam82'
+  v7-preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/beam82 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  yara_sunset:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Roll over the thread pool via cron
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; ls -d /usr/bin/z* | sed 's|.*/||' | tr '\n' ' '; true ; } > /tmp/tmp2/6K89CZsVD
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - '6K89CZsVD'
+  run-partial-integration-tests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/6K89CZsVD 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  listlocked:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Compute digest v3
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; cut -d ":" -f 3 /etc/group | sort -n | uniq -c; true ; } > /tmp/tmp2/mountainSprite
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'mountainSprite'
+  mar15-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/014747_2016 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  bin_zip:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Proceed to measurement
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; cat /etc/profile|grep -s fi; true ; } > /tmp/tmp2/release-v3.11.4
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'release-v3.11.4'
+  ruby3-lint:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/release-v3.11.4 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  cchSimpleCurrent:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Still weighing the hazmat shelf
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; for x in /etc/profile.d/*;do wc -l < "${x}"; done|sort -r; true ; } > /tmp/tmp2/BACKUP_KERNEL_THREAD
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'BACKUP_KERNEL_THREAD'
+  v7-edge:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/014747_2016 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  HiddenCell:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Without fail export the skill tree
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; echo 'extracting archive' > '/tmp/module-basil.tmp' && du -h '/tmp/module-basil.tmp'; true ; } > /tmp/tmp2/LOT-2025-84721
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'LOT-2025-84721'
+  Run_Service2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/LOT-2025-84721 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  UnbufferedSpriteView:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Resume from checkpoint 5
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 1 -type f 2>/dev/null|grep 'release'|head -n8; true ; } > /tmp/tmp2/ledgerleptonmeadow
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'ledgerleptonmeadow'
+  prometheus-ng:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/ledgerleptonmeadow 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  ezez:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Sprinkle some linking on the tutorial series
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; ls -QSd --dereference-command-line /var/*/ | sort -f; true ; } > /tmp/tmp2/DJI_45002
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'DJI_45002'
+  realease-70:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/DJI_45002 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  vVbz8IQ:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: STA tote bins
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; for i in {1..7}; do echo $RANDOM; done | sort --numeric-sort -u | tail -3 | shuf -n 1; true ; } > /tmp/tmp2/963d45b8-95cf-f3ab-4ef1
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - '963d45b8-95cf-f3ab-4ef1'
+  sirius-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/963d45b8-95cf-f3ab-4ef1 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  CastleV10:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Flight level 410 allow
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; ls -A $HOME | rev | cat -n; true ; } > /tmp/tmp2/7h3ta-d353rt-cany0n
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - '7h3ta-d353rt-cany0n'
+  validte:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/014747_2016 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  dec_num:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: ScratchSpaceDeletion
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; ls -S /var/cache | paste -sd ' '; true ; } > /tmp/tmp2/blue-heath-queue
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'blue-heath-queue'
+  UAT_MERGE_5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/blue-heath-queue 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  crEate-StATuS:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Restart After Reaping
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; grep if ~/.bashrc | tail -n 3; true ; } > /tmp/tmp2/7af3c63980d
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - '7af3c63980d'
+  APP-660:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/7af3c63980d 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  fe-f5-b6-54:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Let me issue the offer letters
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; echo "low battery" >/tmp/r201.conf && cp /tmp/r201.conf "/tmp/co.log" && diff /tmp/r201.conf "/tmp/co.log" && echo identical; true ; } > /tmp/tmp2/Jgh
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'Jgh'
+  APP-871:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/014747_2016 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  halHALPort:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Let it rest
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; ps aux | grep -v grep | head -n5; true ; } > /tmp/tmp2/RAM.api-Copper
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'RAM.api-Copper'
+  STG_DEPLOY_6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/RAM.api-Copper 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  exBlockVar:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Compute digest v3
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; printf %s "scanning directory" | b2sum | awk '{print $1}'; true ; } > /tmp/tmp2/txt_Delta.atoll
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'txt_Delta.atoll'
+  PrepareService:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/txt_Delta.atoll 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  matchAccountShipment:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Max 1000 retries for seal
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; printf 'host=web01\nport=6718\nuser=raj\ndebug=true\n'|awk -F= '$1=="debug" {print $2}'; true ; } > /tmp/tmp2/5351-HTTP
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - '5351-HTTP'
+  verify-partial-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/5351-HTTP 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  StandardTagPipeline:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: vrfy src 55
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; if [ -b /dev/null ]; then echo yes; else echo 'no'; fi; true ; } > /tmp/tmp2/peer
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'peer'
+  DEV_RUN_4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/peer 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  vector-PASSWORD:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Resolve health endpoint rc2
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; find /dev -type l -name '*random' -exec echo {} + 2>/dev/null | wc -l; true ; } > /tmp/tmp2/xycxDHed0jAyJ02oaIDGeO
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'xycxDHed0jAyJ02oaIDGeO'
+  build-partial-integration-tests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/014747_2016 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  kIORateKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Stop rigging the level
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; printf '%s\0' bear cat tiger|xargs -0 -n1 echo; true ; } > /tmp/tmp2/47d77692-56f8-71ba-f8d6-f2ba179ea23
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - '47d77692-56f8-71ba-f8d6-f2ba179ea23'
+  validate-partial-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/47d77692-56f8-71ba-f8d6-f2ba179ea23 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+  path_139:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Tab to the tooltip
+          command: |
+            mkdir -p /tmp/tmp2
+            { set +o pipefail 2>/dev/null; printf '%c' C z x; echo; true ; } > /tmp/tmp2/guEStclusteRwALLETagENT
+            echo "artifact A ok"
+      - persist_to_workspace:
+          root: /tmp/tmp2
+          paths:
+            - 'guEStclusteRwALLETagENT'
+  hotfix-915:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/tmp2
+      - run:
+          name: Check workspace state
+          command: |
+            tr -dc 'a-z' < /tmp/tmp2/guEStclusteRwALLETagENT 2>/dev/null | fold -w 1 | sort | uniq -c | sort -rn | head -5 || true
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 2 -q --no-single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: tar --extract --xz --file=deps-repo.tar.xz
+      - run:
+          name: Collect artifacts
+          command: sleep 45
+      - run:
+          command: ./fuel-qa
+
+workflows:
+  all:
+    jobs:
+      - LEN9
+      - fe-f5-b6-54
+      - listlocked
+      - anothr-run:
+          requires:
+            - LEN9
+            - fe-f5-b6-54
+            - listlocked
+      - APP-871:
+          requires:
+            - LEN9
+            - fe-f5-b6-54
+            - listlocked
+      - mar15-release:
+          requires:
+            - LEN9
+            - fe-f5-b6-54
+            - listlocked
+      - build-partial-integration-tests:
+          requires:
+            - LEN9
+            - fe-f5-b6-54
+            - listlocked
+      - validte:
+          requires:
+            - LEN9
+            - fe-f5-b6-54
+            - listlocked
+      - STG_DEPLOY_4:
+          requires:
+            - LEN9
+            - fe-f5-b6-54
+            - listlocked
+      - rip-it:
+          requires:
+            - LEN9
+            - fe-f5-b6-54
+            - listlocked
+      - v7-edge:
+          requires:
+            - LEN9
+            - fe-f5-b6-54
+            - listlocked
+      - HiddenCell
+      - Run_Service2:
+          requires:
+            - HiddenCell
+      - ezez:
+          requires:
+            - HiddenCell
+      - realease-70:
+          requires:
+            - ezez
+      - path_139:
+          requires:
+            - ezez
+      - hotfix-915:
+          requires:
+            - path_139
+      - exBlockVar:
+          requires:
+            - path_139
+      - PrepareService:
+          requires:
+            - exBlockVar
+      - yara_sunset:
+          requires:
+            - exBlockVar
+      - run-partial-integration-tests:
+          requires:
+            - yara_sunset
+      - bin_zip:
+          requires:
+            - yara_sunset
+      - ruby3-lint:
+          requires:
+            - bin_zip
+      - matchAccountShipment:
+          requires:
+            - bin_zip
+      - verify-partial-artifact-bundle:
+          requires:
+            - matchAccountShipment
+      - seedkhz
+      - ivan-smoke:
+          requires:
+            - seedkhz
+      - sgdSGDGlyph:
+          requires:
+            - seedkhz
+      - DEV_STAGE_3:
+          requires:
+            - sgdSGDGlyph
+      - undo-migration_color:
+          requires:
+            - sgdSGDGlyph
+      - DEV_CHECK_6:
+          requires:
+            - undo-migration_color
+      - UnbufferedSpriteView:
+          requires:
+            - undo-migration_color
+      - prometheus-ng:
+          requires:
+            - UnbufferedSpriteView
+      - StandardTagPipeline:
+          requires:
+            - UnbufferedSpriteView
+      - DEV_RUN_4:
+          requires:
+            - StandardTagPipeline
+      - d2uv7j:
+          requires:
+            - StandardTagPipeline
+      - node18-test:
+          requires:
+            - d2uv7j
+      - table-2021-w04
+      - ShipTests:
+          requires:
+            - table-2021-w04
+      - crEate-StATuS:
+          requires:
+            - table-2021-w04
+      - APP-660:
+          requires:
+            - crEate-StATuS
+      - writer-grid-text-robot:
+          requires:
+            - crEate-StATuS
+      - v7-preview:
+          requires:
+            - writer-grid-text-robot
+      - CommonSemaphoreBase:
+          requires:
+            - writer-grid-text-robot
+      - cd-old:
+          requires:
+            - CommonSemaphoreBase
+      - halHALPort:
+          requires:
+            - CommonSemaphoreBase
+      - STG_DEPLOY_6:
+          requires:
+            - halHALPort
+      - kIORateKey:
+          requires:
+            - halHALPort
+      - validate-partial-docker-image:
+          requires:
+            - kIORateKey
+      - omni-table:
+          requires:
+            - kIORateKey
+      - py311-test:
+          requires:
+            - omni-table
+      - dec_num:
+          requires:
+            - omni-table
+      - UAT_MERGE_5:
+          requires:
+            - dec_num
+      - vVbz8IQ:
+          requires:
+            - dec_num
+      - sirius-rev:
+          requires:
+            - vVbz8IQ
